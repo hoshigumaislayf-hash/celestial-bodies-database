@@ -50,7 +50,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
     name character varying(50) NOT NULL,
-    galaxy_type_id integer NOT NULL,
+    galaxy_types_id integer NOT NULL,
     age_in_millions_of_years integer NOT NULL,
     distance_from_earth numeric NOT NULL,
     has_life boolean NOT NULL
@@ -86,7 +86,7 @@ ALTER SEQUENCE public.galaxy_galaxy_id_seq OWNED BY public.galaxy.galaxy_id;
 --
 
 CREATE TABLE public.galaxy_types (
-    galaxy_type_id integer NOT NULL,
+    galaxy_types_id integer NOT NULL,
     name character varying(50) NOT NULL,
     description text NOT NULL
 );
@@ -113,7 +113,7 @@ ALTER TABLE public.galaxy_types_galaxy_type_id_seq OWNER TO freecodecamp;
 -- Name: galaxy_types_galaxy_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.galaxy_types_galaxy_type_id_seq OWNED BY public.galaxy_types.galaxy_type_id;
+ALTER SEQUENCE public.galaxy_types_galaxy_type_id_seq OWNED BY public.galaxy_types.galaxy_types_id;
 
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE public.planet (
     planet_id integer NOT NULL,
     name character varying(50) NOT NULL,
     star_id integer NOT NULL,
-    planet_type_id integer NOT NULL,
+    planet_types_id integer NOT NULL,
     distance_from_star numeric NOT NULL,
     has_life boolean NOT NULL
 );
@@ -197,7 +197,7 @@ ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 --
 
 CREATE TABLE public.planet_types (
-    planet_type_id integer NOT NULL,
+    planet_types_id integer NOT NULL,
     name character varying(50) NOT NULL,
     description text NOT NULL
 );
@@ -224,7 +224,7 @@ ALTER TABLE public.planet_types_planet_type_id_seq OWNER TO freecodecamp;
 -- Name: planet_types_planet_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.planet_types_planet_type_id_seq OWNED BY public.planet_types.planet_type_id;
+ALTER SEQUENCE public.planet_types_planet_type_id_seq OWNED BY public.planet_types.planet_types_id;
 
 
 --
@@ -273,10 +273,10 @@ ALTER TABLE ONLY public.galaxy ALTER COLUMN galaxy_id SET DEFAULT nextval('publi
 
 
 --
--- Name: galaxy_types galaxy_type_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: galaxy_types galaxy_types_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.galaxy_types ALTER COLUMN galaxy_type_id SET DEFAULT nextval('public.galaxy_types_galaxy_type_id_seq'::regclass);
+ALTER TABLE ONLY public.galaxy_types ALTER COLUMN galaxy_types_id SET DEFAULT nextval('public.galaxy_types_galaxy_type_id_seq'::regclass);
 
 
 --
@@ -294,10 +294,10 @@ ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('publi
 
 
 --
--- Name: planet_types planet_type_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: planet_types planet_types_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.planet_types ALTER COLUMN planet_type_id SET DEFAULT nextval('public.planet_types_planet_type_id_seq'::regclass);
+ALTER TABLE ONLY public.planet_types ALTER COLUMN planet_types_id SET DEFAULT nextval('public.planet_types_planet_type_id_seq'::regclass);
 
 
 --
@@ -464,7 +464,7 @@ ALTER TABLE ONLY public.galaxy_types
 --
 
 ALTER TABLE ONLY public.galaxy_types
-    ADD CONSTRAINT galaxy_types_pkey PRIMARY KEY (galaxy_type_id);
+    ADD CONSTRAINT galaxy_types_pkey PRIMARY KEY (galaxy_types_id);
 
 
 --
@@ -512,7 +512,7 @@ ALTER TABLE ONLY public.planet_types
 --
 
 ALTER TABLE ONLY public.planet_types
-    ADD CONSTRAINT planet_types_pkey PRIMARY KEY (planet_type_id);
+    ADD CONSTRAINT planet_types_pkey PRIMARY KEY (planet_types_id);
 
 
 --
@@ -536,7 +536,7 @@ ALTER TABLE ONLY public.star
 --
 
 ALTER TABLE ONLY public.galaxy
-    ADD CONSTRAINT galaxy_galaxy_type_id_fkey FOREIGN KEY (galaxy_type_id) REFERENCES public.galaxy_types(galaxy_type_id);
+    ADD CONSTRAINT galaxy_galaxy_type_id_fkey FOREIGN KEY (galaxy_types_id) REFERENCES public.galaxy_types(galaxy_types_id);
 
 
 --
@@ -552,7 +552,7 @@ ALTER TABLE ONLY public.moon
 --
 
 ALTER TABLE ONLY public.planet
-    ADD CONSTRAINT planet_planet_type_id_fkey FOREIGN KEY (planet_type_id) REFERENCES public.planet_types(planet_type_id);
+    ADD CONSTRAINT planet_planet_type_id_fkey FOREIGN KEY (planet_types_id) REFERENCES public.planet_types(planet_types_id);
 
 
 --
